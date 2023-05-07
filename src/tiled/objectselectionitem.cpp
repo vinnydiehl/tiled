@@ -105,6 +105,11 @@ void MapObjectOutline::syncWithMapObject(const MapRenderer &renderer)
     QRectF bounds = mObject->screenBounds(renderer);
     bounds.translate(-pixelPos);
 
+    // DEBUG: Translates ants marching selection box
+    if (mObject->shape() == MapObject::Polygon || mObject->shape() == MapObject::Polygon
+            || mObject->isTileObject())
+        bounds.translate(QPointF(10, 10));
+
     if (auto mapScene = static_cast<MapScene*>(scene()))
         pixelPos += mapScene->absolutePositionForLayer(*mObject->objectGroup());
 

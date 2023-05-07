@@ -30,8 +30,8 @@
 
 #pragma once
 
-#include "layer.h"
 #include "object.h"
+#include "objectgroup.h"
 #include "tileset.h"
 
 #include <QColor>
@@ -473,11 +473,6 @@ inline void Map::setInfinite(bool infinite)
 inline bool Map::invertYAxis() const
 {
     return mParameters.invertYAxis;
-}
-
-inline void Map::setInvertYAxis(bool invertYAxis)
-{
-    mParameters.invertYAxis = invertYAxis;
 }
 
 inline int Map::hexSideLength() const

@@ -640,3 +640,25 @@ Map::RenderOrder Tiled::renderOrderFromString(const QString &string)
         renderOrder = Map::LeftUp;
     return renderOrder;
 }
+
+void Map::setInvertYAxis(bool invertYAxis)
+{
+    mParameters.invertYAxis = invertYAxis;
+    for (auto layer : mLayers) {
+        if (!layer->isObjectGroup())
+            continue;
+
+        auto og = layer->asObjectGroup();
+        for (auto it = og->begin(); it != og->end(); ++it) {
+            auto object = *it;
+
+            qreal newY = height() * tileHeight() - object->height() - object->y();
+            // Tile objects are anchored in the lower-left already, so don't height-adjust
+            if (object->isTileObject())
+                newY += object->height();
+
+            object->setY(newY);
+        }
+    }
+}
+

@@ -834,7 +834,9 @@ static QRectF pixelBounds(const MapObject *object)
     case MapObject::Polygon:
     case MapObject::Polyline: {
         // Alignment is irrelevant for polygon objects since they have no size
-        const QPointF &pos = object->position();
+        QPointF pos = object->position();
+        // DEBUG: resize tool for polygons
+        pos += QPointF(10, 10);
         const QPolygonF polygon = object->polygon().translated(pos);
         return polygon.boundingRect();
     }

@@ -133,7 +133,7 @@ QPainterPath OrthogonalRenderer::shape(const MapObject *object) const
     switch (object->shape()) {
     case MapObject::Rectangle: {
         if (bounds.isNull()) {
-            path.addRect(object->x() - 10, object->nonInvertedY() - 10, 20, 20);
+            path.addRect(object->x() - 10, object->y() - 10, 20, 20);
         } else {
             if (const Tile *tile = object->cell().tile()) {
                 QPointF tileOffset = tile->offset();
@@ -156,7 +156,8 @@ QPainterPath OrthogonalRenderer::shape(const MapObject *object) const
     case MapObject::Polygon:
     case MapObject::Polyline: {
         const QPointF &pos = object->position();
-        const QPolygonF polygon = object->polygon().translated(pos);
+        // DEBUG: Translates polygon line
+        const QPolygonF polygon = object->polygon().translated(10, 10).translated(pos);
         QPolygonF screenPolygon = pixelToScreenCoords(polygon);
 
         if (object->shape() == MapObject::Polygon && !screenPolygon.isEmpty())

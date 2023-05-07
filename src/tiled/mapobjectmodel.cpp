@@ -166,7 +166,7 @@ QVariant MapObjectModel::data(const QModelIndex &index, int role) const
                 return QLatin1Char('(')
                         + QString::number(mapObject->x())
                         + QLatin1String(", ")
-                        + QString::number(InvertYAxisHelper(mapDocument()).tileY(mapObject->y()))
+                        + QString::number(mapObject->y())
                         + QLatin1Char(')');
             }
             break;

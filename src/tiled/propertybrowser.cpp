@@ -1271,18 +1271,13 @@ QUndoCommand *PropertyBrowser::applyMapObjectValueTo(PropertyId id, const QVaria
     case XProperty: {
         command = new ChangeMapObject(mDocument, mapObject,
                                       MapObject::PositionProperty,
-                                      QPointF(val.toReal(), mapObject->nonInvertedY()));
+                                      QPointF(val.toReal(), mapObject->y()));
         break;
     }
     case YProperty: {
-        qreal y = val.toReal();
-        if (mapObject->map()->invertYAxis() && !mapObject->isTileObject())
-            y += mapObject->height();
-
         command = new ChangeMapObject(mDocument, mapObject,
                                       MapObject::PositionProperty,
-                                      QPointF(mapObject->x(),
-                                              InvertYAxisHelper(mMapDocument).pixelY(y)));
+                                      QPointF(mapObject->x(), val.toReal()));
         break;
     }
     case WidthProperty: {
@@ -1903,7 +1898,7 @@ void PropertyBrowser::updateProperties()
         if (auto visibleProperty = mIdToProperty[VisibleProperty])
             visibleProperty->setValue(mapObject->isVisible());
         mIdToProperty[XProperty]->setValue(mapObject->x());
-        mIdToProperty[YProperty]->setValue(InvertYAxisHelper(mMapDocument).pixelY(mapObject->y()));
+        mIdToProperty[YProperty]->setValue(mapObject->y());
 
         if (flags & ObjectHasDimensions) {
             mIdToProperty[WidthProperty]->setValue(mapObject->width());

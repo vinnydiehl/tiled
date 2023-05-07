@@ -153,6 +153,10 @@ void MapObjectItem::paint(QPainter *painter,
 
         // TODO: Code mostly duplicated in MapObjectOutline
         QRectF bounds = mObject->screenBounds(*renderer);
+        // DEBUG: Translate onHover outline for polygons/tiles
+        if (mObject->shape() == MapObject::Polygon || mObject->shape() == MapObject::Polygon
+                || mObject->isTileObject())
+            bounds.translate(QPointF(10, 10));
         bounds.translate(-pixelPos);
 
         const QLineF lines[4] = {
